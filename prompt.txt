@@ -1,0 +1,264 @@
+# Task: Analyze the Existing Codebase and Generate a Detailed Stage-Wise Workflow Architecture Diagram
+
+Act as a Senior Software Architect, System Analyst, and Technical Documentation Engineer.
+
+I want you to thoroughly analyze the current repository and generate a detailed, end-to-end workflow architecture diagram based entirely on the actual implementation in the codebase.
+
+I have provided a reference architecture diagram. Use it as the visual and structural reference for the output.
+
+**IMPORTANT: Do not create a generic architecture diagram. I want a detailed processing workflow diagram that explains exactly how the application works internally, step by step.**
+
+## PHASE 1: CODEBASE ANALYSIS
+
+Before generating the diagram, inspect the entire relevant codebase.
+
+Identify and understand:
+
+1. Application entry points and execution triggers.
+2. API endpoints and request handling.
+3. Main services and their responsibilities.
+4. Processing pipelines and execution sequences.
+5. Classes, methods, and functions involved in each processing stage.
+6. Interactions between services and modules.
+7. External API calls, message queues, event producers, and consumers.
+8. Database interactions, including tables, read operations, write operations, and updates.
+9. Caching mechanisms and cache lookup/update operations.
+10. Error handling, retries, fallback mechanisms, and exception flows.
+11. Background tasks, parallel processing, and asynchronous operations.
+12. Final outputs and downstream consumers.
+
+Follow the actual execution path from the initial trigger until the entire workflow completes.
+
+Do not rely solely on folder names, class names, or README files. Inspect the actual implementation and trace function calls wherever necessary.
+
+## PHASE 2: IDENTIFY PROCESSING STAGES
+
+Divide the complete execution flow into logical stages.
+
+For example, depending on the actual implementation:
+
+- Stage 1: Input / Event Processing
+- Stage 2: Preprocessing and Validation
+- Stage 3: Parallel Data Fetching
+- Stage 4: Data Transformation and Processing
+- Stage 5: Business Logic / Rule Engine
+- Stage 6: Database Persistence
+- Stage 7: Final Output / Response
+
+These are examples only. Determine the actual stages from the codebase.
+
+For EVERY stage, identify:
+
+- Stage name and purpose.
+- Main service/class responsible.
+- Exact methods or functions executed.
+- Input received from the previous stage.
+- Individual processing steps in execution order.
+- Conditions and validation checks.
+- Data transformations.
+- Database or external service interactions.
+- Output produced by the stage.
+- Next stage receiving that output.
+
+If a stage performs parallel operations, represent each operation as a separate branch and show where the branches converge.
+
+## PHASE 3: GENERATE THE ARCHITECTURE DIAGRAM
+
+Generate an editable Draw.io (diagrams.net) architecture diagram using valid Draw.io XML.
+
+The diagram should follow the visual style of the provided reference image.
+
+### A. Overall Layout
+
+Use a top-to-bottom workflow layout.
+
+Organize the architecture into clearly numbered and titled stages:
+
+STAGE 1: [Actual Stage Name]
+STAGE 2: [Actual Stage Name]
+STAGE 3: [Actual Stage Name]
+...
+
+Each stage should be enclosed inside a distinct container.
+
+Use arrows to show the exact execution sequence between stages.
+
+### B. Inside Each Stage
+
+Show the following wherever applicable:
+
+1. Main service or processing component.
+2. Individual methods or functions called.
+3. Step-by-step processing operations.
+4. Conditions and validation checks.
+5. Cache lookups.
+6. Database reads and writes.
+7. External service/API calls.
+8. Intermediate data transformations.
+9. Stage output.
+
+Do not represent an entire service as just one box if it performs several important operations.
+
+Break it down into smaller boxes to explain its internal workflow.
+
+For example:
+
+STAGE 2: DATA FETCHING
+
+    FetchDataService
+          |
+    1. Retrieve input identifiers
+          |
+    2. Query database
+          |
+    3. Check cache
+          |
+    4. Fetch missing records
+          |
+    5. Transform response
+          |
+    Output: Processed Data
+
+Use actual service and method names from the repository instead of these illustrative names.
+
+### C. Parallel Processing
+
+Where multiple services execute concurrently:
+
+- Place them side by side.
+- Give each service its own internal processing steps.
+- Show their individual inputs and outputs.
+- Use branching arrows to indicate parallel execution.
+- Show the merge point where their results are combined.
+
+Clearly distinguish sequential processing from parallel processing.
+
+### D. Supporting Components
+
+In addition to the main workflow, include separate sections for:
+
+**1. Database Tables**
+- Identify actual database tables.
+- Show the relevant tables individually.
+- Mention which stage reads or writes to each table.
+- Include important relationships where identifiable.
+
+**2. Error Handling**
+- Exception handling components.
+- Retry mechanisms.
+- Retry counts and delays, if defined in code/configuration.
+- Error producers and consumers.
+- Dead-letter or error queues, if implemented.
+- Audit/error status updates.
+
+**3. Caching**
+- Cache technology.
+- Cache lookup.
+- Cache hit/miss behavior.
+- Cache update/invalidation.
+
+**4. External Integrations**
+- External APIs.
+- Message brokers.
+- Third-party services.
+- MCP servers/tools, if applicable.
+
+### E. Legend and Additional Information
+
+Include a legend similar to the reference image.
+
+Use consistent colors:
+
+- Green: Input messages / Successful outputs
+- Purple: Services / Processing components
+- Yellow: Configuration / Data / Cache operations
+- Red: Critical conditions / Errors
+- Blue: Main workflow stage containers
+- Orange: Business rules / Important logic
+- Grey: External integrations
+
+Also include, wherever supported by the codebase:
+
+- Key processing metrics.
+- Retry configuration.
+- Important business rules.
+- Final processing status.
+- Business value / purpose of the workflow.
+
+Do not invent metrics or business rules.
+
+## PHASE 4: DOCUMENT THE WORKFLOW STEP BY STEP
+
+Along with the diagram, create a detailed workflow explanation in a Markdown file named:
+
+WORKFLOW_DOCUMENTATION.md
+
+For each stage, document:
+
+### Stage N: [Stage Name]
+
+**Purpose:** What this stage accomplishes.
+
+**Trigger/Input:** What initiates the stage and what data it receives.
+
+**Execution Flow:**
+1. First operation.
+2. Second operation.
+3. Third operation.
+4. Subsequent operations.
+
+**Code References:**
+- File path.
+- Class name.
+- Method/function name.
+
+**Database Interactions:**
+- Tables accessed.
+- Operations performed (SELECT, INSERT, UPDATE, DELETE).
+
+**Output:** What is generated and passed to the next stage.
+
+**Failure Scenarios:** What happens if an operation fails.
+
+Explain the actual execution flow in simple technical language so that a developer unfamiliar with the repository can understand the entire system.
+
+## PHASE 5: OUTPUT FILES
+
+Generate the following artifacts:
+
+1. `architecture.drawio` – Complete editable Draw.io architecture diagram.
+2. `architecture.png` – Exported visual preview of the diagram, if export tooling is available.
+3. `WORKFLOW_DOCUMENTATION.md` – Detailed stage-wise workflow explanation.
+4. `CODE_REFERENCE.md` – Mapping between diagram components and actual source files, classes, methods, and functions.
+
+## QUALITY REQUIREMENTS
+
+- The diagram must be based on the actual codebase.
+- Every major processing step must be represented.
+- Preserve the actual execution order.
+- Do not omit important intermediate operations.
+- Do not invent services, database tables, APIs, or processing stages.
+- Clearly distinguish implemented functionality from assumptions or recommendations.
+- Use actual class names, method names, and function names.
+- Avoid overcrowding individual stages.
+- Use appropriate spacing and alignment.
+- Ensure connectors do not unnecessarily overlap.
+- Keep the diagram readable when exported.
+- Use multiple pages or separate diagrams if the workflow is too large to fit legibly on one page.
+
+## FINAL VALIDATION
+
+Before completing the task:
+
+1. Verify the diagram against the actual source code.
+2. Check that every stage has the correct input and output.
+3. Verify all service-to-service connections.
+4. Verify database interactions.
+5. Verify parallel branches and merge points.
+6. Verify error-handling paths.
+7. Validate the generated Draw.io XML.
+8. Ensure that the Markdown documentation agrees with the diagram.
+
+Do not stop after producing a high-level architecture diagram.
+
+The objective is to create a detailed, stage-wise technical workflow diagram that allows a developer to understand exactly what happens inside the application, from the initial trigger to final completion, without having to manually trace the entire codebase.
